@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css">
+
+    <style>
+        table {
+            /*border-collapse: collapse;*/
+            border: 2px solid #000000;
+        }
+        td,
+        th {
+            border: 0px solid #000000;
+            height: 38px;
+            width: 38px;
+            padding: 3px;
+        }
+    </style>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+</head>
+
+<body>
+    <h2>12. naloga- jQuery DOM</h2>
+    <h1>Točke: <span id="tocke" style="color: greenyellow">0</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span
+            id="stanje" style="color: red">WASD - za gibanje!</span></h1>
+    <span id="izpis"></span>
+
+</body>
+<script>
+    const dim = 20;
+    const height = dim;
+    const width = dim;
+    const hitrostIgre = 5;
+    var player = {
+        x: 0,
+        y: 0,
+        r: 0, // 0 - N, 1 - E, 2 - S, 3 - W
+        l: 0,
+    };
+    var tail = [];
+    var gamestate = true;
+    var drawnig;
+    player.x = dim / 2;
+    player.y = dim / 2;
+    // Generiranje igralnega polja
+    var polje = new Array(dim);
+    for (var i = 0; i < dim; i++) {
+        polje[i] = new Array(dim);
+    }
+    for (var y = 0; y < height; y++) {
+        for (var x = 0; x < width; x++) {
+            polje[y][x] = 0;
+        }
+    }
+    polje[4][5] = 3;
+    $("body").keypress(function (knof) {
+        if (knof.key == "w") {
+            player.r = 0;
+        }
+        if (knof.key == "a") {
+            player.r = 3;
+        }
+        if (knof.key == "s") {
+            player.r = 2;
+        }
+        if (knof.key == "d") {
+            player.r = 1;
+        }
+    });
+    $("body").on("swipeleft", function(){
+        player.r--;
+        if(player.r < 0){
+            player.r = 3;
+        }
+    });
+    $("body").on("swiperight", function(){
+        player.r++;
+        if(player.r > 3){
+            player.r = 0;
+        }
+    });
+    zanka();
+    function zanka() {
+        setTimeout(zanka, (250 - player.l * hitrostIgre));
+        if (gamestate == true) {
+            move();
+            gameCheck();
+            draw();
+        }
+    }
+    function gameCheck() {
+        if ((player.x <= 0) || (player.x >= width - 1) || (player.y <= 0) || (player.y >= height - 1)) {
+            gamestate = false;
+        }
+    }
+    function updateTail(len) {
+        if (len == 0) {
+            return 1;
+        }
+        if (len == 1) {
+            polje[tail[len - 1][0]][tail[len - 1][1]] = 0;
+            tail[len - 1][0] = player.y;
+            tail[len - 1][1] = player.x;
+            return 1;
+        }
+        polje[tail[len - 1][0]][tail[len - 1][1]] = 0;
+        tail[len - 1][0] = tail[len - 2][0];
+        tail[len - 1][1] = tail[len - 2][1];
+        return updateTail(len - 1);
+    }
+    function move() {
+        polje[player.y][player.x] = 0;
+        updateTail(player.l);
+        for (var i = 0; i < player.l; i++) {
+            polje[tail[i][0]][tail[i][1]] = 1;
+        }
+        switch (player.r) {
+            case 0:
+                {
+                    if (polje[player.y - 1][player.x] == 1) {
+                        gamestate = false;
+                    } else {
+                        player.y--;
+                    }
+                    break;
+                }
+            case 1:
+                {
+                    if (polje[player.y][player.x + 1] == 1) {
+                        gamestate = false;
+                    } else {
+                        player.x++;
+                    }
+                    break;
+                }
+            case 2:
+                {
+                    if (polje[player.y + 1][player.x] == 1) {
+                        gamestate = false;
+                    } else {
+                        player.y++;
+                    }
+                    break;
+                }
+            case 3:
+                {
+                    if (polje[player.y][player.x - 1] == 1) {
+                        gamestate = false;
+                    } else {
+                        player.x--;
+                    }
+                    break;
+                }
+        }
+        if (polje[player.y][player.x] == 3) {
+            tail.push(new Array);
+            tail[player.l].push(player.y, player.x);
+            player.l++;
+            var tmp1 = Math.floor(Math.random() * 18 + 1);
+            var tmp2 = Math.floor(Math.random() * 18 + 1);
+            while (polje[tmp1][tmp2] == 1 || polje[tmp1][tmp2] == 2) {
+                tmp1 = Math.floor(Math.random() * 18 + 1);
+                tmp2 = Math.floor(Math.random() * 18 + 1);
+            }
+            polje[tmp1][tmp2] = 3;
+            $("#tocke").html(player.l);
+        }
+        polje[player.y][player.x] = 2;
+    }
+    function draw() {
+        var izpis = "<table>";
+        if (gamestate != true) {
+            $("#stanje").html("KONEC SI!");
+        } else {
+            for (var y = 1; y < height - 1; y++) {
+                izpis += "<tr>";
+                for (var x = 1; x < width - 1; x++) {
+                    switch ((polje[y][x])) {
+                        case 0:
+                            {
+                                izpis += "<td bgcolor='#ffffff'>";
+                                break;
+                            }
+                        case 1:
+                            {
+                                izpis += "<td bgcolor='#765432'>";
+                                break;
+                            }
+                        case 2:
+                            {
+                                izpis += "<td bgcolor='#543210'>";
+                                break;
+                            }
+                        case 3:
+                            {
+                                izpis += "<td bgcolor='#fa0055'>";
+                                break;
+                            }
+                        default:
+                            {
+                                izpis += "<td bgcolor='#ffffff'>";
+                                break;
+                            }
+                    }
+                    izpis += "</td>";
+                }
+                izpis += "</tr>";
+            }
+            izpis += "</table>";
+            $("#izpis").html(izpis);
+        }
+        //setTimeout(draw, 10);
+    }
+</script>
+
+</html>
