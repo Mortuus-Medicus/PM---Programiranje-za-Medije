@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        td,
+        th {
+            border: 1px solid #000000;
+            padding: 3px;
+        }
+
+        .mocno {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>6. naloga - Funkcije</h2>
+
+    <span id="izpis"> </span>
+</body>
+<script>
+    var izpis = "";
+    var vecdimPolje = [
+        [0, 1, 2, 3, 4],
+        [1, 2, 3, 4, 5],
+        [2, 3, 4, 5, 6],
+        [3, 4, 5, 6, 7],
+        [4, 5, 6, 7, 8],
+        [5, 6, 7, 8, 9],
+        [6, 7, 8, 9, 0],
+        [7, 8, 9, 0, 1],
+    ];
+
+    izpisTabela(vecdimPolje);
+
+    var poljeVsot = [];
+
+    for (x = 0; x < vecdimPolje.length; x++) {
+        poljeVsot[x] = vsota(vecdimPolje, x);
+    }
+
+    izpisPolje(poljeVsot);
+
+    var vnesenaLeta = prompt("Vnesi tri letnice, loči jih z verjico ',', letnica rojstva, trenutno leto in letošnje leto").split(",");
+
+    izpis += "<br>" + izracunStarosti(vnesenaLeta[0], vnesenaLeta[1]);
+    izpis += "<br>" + izracunStarosti(vnesenaLeta[1], vnesenaLeta[1]);
+    izpis += "<br>" + izracunStarosti(vnesenaLeta[2], vnesenaLeta[1]);
+
+
+
+    function vsota(tabela, vrsta) {
+        var rezultat = 0;
+
+        tabela[vrsta].forEach(function (vrednost) {
+            rezultat += vrednost;
+        });
+
+        return rezultat;
+    }
+
+    function izpisTabela(vnos) {
+        izpis += "<br><table>";
+
+        for (i = 0; i < vnos.length; i++) {
+            izpis += "<tr>";
+            for (j = 0; j < vnos[i].length; j++) {
+                izpis += "<td>" + vnos[i][j] + "</td>";
+            }
+            izpis += "</tr>";
+        }
+        izpis += "</table><br>";
+    }
+
+    function izpisPolje(array) {
+        izpis += "<br><table>";
+
+        array.forEach(function (vrednost, indeks) {
+            izpis += "<tr><td>vrsta " + indeks + "</td><td>vsota=" + vrednost + "</td></tr>";
+        });
+
+        izpis += "</table><br>";
+    }
+
+    function izracunStarosti(letoRojstva, trenutnoLeto) {
+        var starost = trenutnoLeto - letoRojstva;
+
+        if (starost == 0) {
+            return ("Oseba se je pravkar rodila (" + starost + " let), čestitke!");
+        } else if (starost < 0) {
+            return ("Odlično! Kmalu se vam bo rodil otrok, čez približno " + (starost * -1) + " let!");
+        } else {
+            return ("Oseba je stara " + (trenutnoLeto - letoRojstva) + " let.")
+        }
+    }
+
+    document.getElementById("izpis").innerHTML = izpis;
+</script>
+
+</html>

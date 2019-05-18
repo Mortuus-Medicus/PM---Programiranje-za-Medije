@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<style>
+		h2 {
+			color: #000000;
+		}
+
+		table {
+			border-collapse: collapse;
+		}
+
+		td,
+		th {
+			border: 1px solid #000000;
+			padding: 3px;
+		}
+
+		button {
+			background-color: #ffffff;
+		}
+	</style>
+	<!-- Vključimo jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<!-- Vključimo jQuery UI -->
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+</head>
+
+<body>
+	<h2 id="naslov">11. naloga- jQuery vizualni učinki</h2>
+	<h2 id="koncano" hidden>Naslov je izginil!</h2>
+	<button>Spremeni barvo ozadja</button>
+	<br>
+	<span id="izpis"></span><br>
+	Na spletni strani se pritisnili miško <span id="stevec">0</span> krat! <br>
+
+	Pritisnili ste sledeče tipke: <br>
+	<span id="tipke"></span>
+
+</body>
+<script>
+	$("#naslov").animate({ opacity: 0 }, 5000, function () {
+		$("#naslov").toggle();
+		$("#koncano").toggle();
+	});
+
+	var button = document.querySelector("button");
+	button.addEventListener("click", function () {
+		$("body").css("background-color", "rgb(" + (Math.random() * (255 - 0 + 1)) + ", " + (Math.random() * (255 - 0 + 1)) + ", " + (Math.random() * (255 - 0 + 1)) + ")");
+		$("#izpis").text("Barva ozadja je " + ($("body").css("background-color")));
+	});
+
+	var stevec = 0;
+	$("html").click(function () {
+		stevec++;
+		$("#stevec").text(stevec);
+		$("button").css("transform", "rotate(" + ((stevec * 10) + "deg)"));
+	});
+
+	$("body").keypress(function (knof) {
+		$("#tipke").text(function (indeks, vrednost) {
+			return vrednost + knof.key + " ";
+		});
+	});
+
+	// malo zabave!
+	var hitrost = 2000;
+	rekurzija();
+
+	// rekuzija je vedno zanimiva, predvsem ko je ne razumeš :D 
+	// dalo se bi narediti tako da bi za barvo imel int pa ga bi v hex pretvarjal,
+	// toda tako kot imam zdaj deluje, z mnogo manj rekurzijami,
+	// kar pa je pri JS kar problem, ker ima vsak brskalnik omejeno število
+	// koliko rekurzij lahko izvaja!
+	// tako da s tem načinom KONKRETNO zmanjšam število rekurzij!
+	function rekurzija() {
+		$("button").animate({ backgroundColor: "#0000ff" }, hitrost, function () {
+			$("button").animate({ backgroundColor: "#00ff00" }, hitrost, function () {
+				$("button").animate({ backgroundColor: "#00ffff" }, hitrost, function () {
+					$("button").animate({ backgroundColor: "#ff0000" }, hitrost, function () {
+						$("button").animate({ backgroundColor: "#ff00ff" }, hitrost, function () {
+							$("button").animate({ backgroundColor: "#ffff00" }, hitrost, function () {
+								$("button").animate({ backgroundColor: "#ffffff" }, hitrost), rekurzija();
+							});
+						});
+					});
+				});
+			});
+		});
+	}
+	
+	
+
+</script>
+
+</html>

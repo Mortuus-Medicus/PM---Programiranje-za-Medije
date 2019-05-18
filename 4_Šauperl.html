@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<style>
+		table {
+			border-collapse: collapse;
+		}
+
+		td,
+		th {
+			border: 1 px solid #000000;
+			padding: 3px;
+		}
+	</style>
+</head>
+
+<body>
+	<h2>4. naloga - Pogojni stavki</h2>
+
+	<span id="izpis"> </span>
+</body>
+<script>
+	var xy = prompt("Vnesi x in y, loči jih z verjico ','").split(",");
+	var zastava = true;
+	var izpis = "";
+
+	xy.forEach(function (vrednost) {
+		if (zastava == true) {
+			if (isNaN(vrednost) || (xy == "" || vrednost.length == 0)) {
+				izpis += "Vneseno ni bilo nobeno število!"
+				zastava = false;
+			} else {
+				zastava = true;
+			}
+		}
+	});
+
+	if (zastava == true) {
+		var stevilo = najvecjeStevilo(xy);
+		izpis += "Največje vneseno število je " + stevilo + "<br><br>";
+		narisiTrikotnik(stevilo);
+		narisiKvadrat(stevilo);
+	}
+
+	function najvecjeStevilo(vnos) {
+		var najvecje = vnos[0];
+		vnos.forEach(function (vrednost) {
+			if (najvecje < vrednost) {
+				najvecje = vrednost;
+			}
+		});
+		return najvecje;
+	}
+
+
+	function narisiTrikotnik(vnos) {
+		izpis += "<table>";
+		var i = 0;
+		var j = 0;
+
+		while (i < vnos) {
+			izpis += "<tr>";
+			while (j < vnos - i) {
+				izpis += "<td>*</td>";
+				j++;
+			}
+			j = 0;
+			izpis += "</tr>";
+			i++;
+		}
+		izpis += "</table><br><br>";
+	}
+
+	function narisiKvadrat(vnos) {
+		izpis += "<table>";
+		var i = 0;
+		var j = 0;
+
+		while (i < vnos) {
+			izpis += "<tr>";
+			while (j < vnos) {
+				if(i == 0 || i == vnos-1 || j == 0 || j == vnos-1 || i == (vnos-1)-j){
+					izpis += "<td>#</td>";
+				} else {
+					izpis += "<td></td>";
+				}
+				j++;
+			}
+			j = 0;
+			izpis += "</tr>";
+			i++;
+		}
+		izpis += "</table><br><br>";
+	}
+
+
+
+	document.getElementById("izpis").innerHTML = izpis;
+</script>
+
+</html>

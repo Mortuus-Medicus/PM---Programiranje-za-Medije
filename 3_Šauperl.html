@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    td,
+    th {
+      border: 1px solid #000000;
+      padding: 3px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>3. Naloga - Polja in prompt</h2>
+
+  <span id="izpis"></span>
+
+</body>
+
+<script>
+  // Uporabljam spremenljivo izpis v katerega pišem vse izpise, zato ker nemaram getDocumentBy, blablabla-
+  var izpis = "";
+  // Zastavico uporabljam s katero označujem če je bilo vneseno število ali ne število
+  var zastava = true;
+  // Uporabnika pozovemo da vnese števila, ter da jih naj loči s vejico, tako jih lahko bi razberemo narazen.
+  var mojaStevila = prompt("Vnesi števila, loči jih z verjico ','").split(",");
+
+  // Preverjamo ali je bilo vneseno število, ali kaj drugega, ali če je bilo prazno
+  mojaStevila.forEach(function(inindeksPolja) {
+    if (zastava == true) {
+      if (isNaN(inindeksPolja) || (mojaStevila == "" || inindeksPolja.length == 0)) {
+        izpis += "Vneseno ni bilo nobeno število!"
+        zastava = false;
+      } else {
+        zastava = true;
+      }
+    }
+  });
+
+
+  if (zastava == true) {
+    izpisTabela(mojaStevila);
+
+    function izpisTabela(array, izpisiIndeks = 0) {
+      izpis += "<br><table>";
+
+      if (izpisiIndeks == 1) {
+        array.forEach(function(vrednost, indeks) {
+          izpis += "<tr><td>" + indeks + "</td><td>" + vrednost + "</td></tr>";
+        });
+      } else {
+        array.forEach(function(vrednost) {
+          izpis += "<tr><td>" + vrednost + "</td></tr>";
+        });
+      }
+
+      izpis += "</table><br>";
+    }
+
+    izpis += "<br><table>";
+    mojaStevila.forEach(function(vrednost) {
+      if (vrednost % 2 == 0) {
+        izpis += "<tr><td>" + vrednost + "</td><td> sodo </td></tr>";
+      } else {
+        izpis += "<tr><td>" + vrednost + "</td><td> liho </td></tr>";
+      }
+    });
+    izpis += "</table><br>";
+
+    izpis += "<br><table>";
+    mojaStevila.forEach(function(vrednost) {
+      if (vrednost % 15 == 0) {
+        izpis += "<tr><td>" + vrednost + "</td><td> število je deljivo s 3 in 5 </td></tr>";
+      }
+    });
+    izpis += "</table><br>";
+  }
+
+
+
+  // Izpis vsega
+  document.getElementById("izpis").innerHTML = izpis;
+</script>
+
+</html>

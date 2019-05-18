@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+</head>
+
+<body>
+	<h2>8. naloga - Forma</h2>
+	<p id="besedilo">
+		Podjetje Lisca d.d.-modna oblačila iz Sevnice,
+		ki je vodilni proizvajalec in izvoznikdamskega modnega perila in
+		kopalk v Sloveniji, že peto desetletje aktivno delujena zahtevnih
+		zahodnoevropskih trgih in piše svojo zgodbo o izvoznih
+		uspehih.Vendar pa vse hitrejši proces internacionalizacije
+		poslovanja in globalizacije trgovzahteva od podjetja
+		spreminjanje strukture delovanja z opuščanjem
+		goleproizvodne funkcije v korist trženja lastnih blagovnih znamk,
+		ob upoštevanju načelposlovne uspešnosti. Lisca se je odločila za
+		strategijo krovne blagovne znamke, kiomogoča sočasno tudi
+		promoviranje podjetja, ne le izdelkov.
+	</p>
+	Vnosno Polje: <input id="vnos" type="text"><br>
+	Potrdilno polje: <input id="dovoljenje" type="checkbox"><br>
+
+	<button onclick="prvi_gumb()">Prvi Gumb</button>
+	<button onclick="drugi_gumb()">Drugi Gumb</button>
+	<button onclick="tretji_gumb()">Tretji Gumb</button>
+
+</body>
+<script>
+	function prvi_gumb() {
+		document.getElementById("besedilo").style.color = "magenta";
+		document.getElementById("besedilo").style.fontSize = "larger";
+		document.getElementById("besedilo").style.fontFamily = "Tahoma, Geneva, sans-serif";
+	}
+
+	function drugi_gumb() {
+		document.getElementById("besedilo").innerHTML += document.getElementById("vnos").value;
+	}
+
+	function tretji_gumb() {
+		if(document.getElementById("dovoljenje").checked == true){
+			document.getElementsByTagName("body")[0].style.backgroundColor = document.getElementById("vnos").value;
+		}
+	}
+</script>
+
+</html>

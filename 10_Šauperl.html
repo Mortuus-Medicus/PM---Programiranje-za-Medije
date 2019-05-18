@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<style>
+		table {
+			border-collapse: collapse;
+		}
+
+		td,
+		th {
+			border: 1px solid #000000;
+			padding: 3px;
+		}
+
+		button {
+			width: 54px;
+		}
+	</style>
+</head>
+
+<body>
+	<h2>10. naloga - Kalkulator</h2>
+
+
+	<table>
+		<tr>
+			<td colspan="4"><input id="vnos" type="text" size="30"></td>
+		</tr>
+		<tr>
+			<td><button onclick="document.getElementById('vnos').value /= 100;">%</button></td>
+			<td><button	onclick="document.getElementById('vnos').value = Math.sqrt(getElementById('vnos').value)">√</button></td>
+			<td><button	onclick="document.getElementById('vnos').value = Math.pow(getElementById('vnos').value, 2)">x&sup2;</button></td>
+			<td><button onclick="document.getElementById('vnos').value = 1 / getElementById('vnos').value">1/x</button></td>
+		</tr>
+		<tr>
+			<td><button onclick="document.getElementById('vnos').value = ''">CE</button></td>
+			<td><button onclick="izbrisiVse()">C</button></td>
+			<td><button onclick='document.getElementById("vnos").value = document.getElementById("vnos").value.substring(0, (document.getElementById("vnos").value.length-1))'>⇐</button></td>
+			<td><button onclick="document.getElementById('vnos').value += '/'">/</button></td>
+		</tr>
+		<tr>
+			<td><button onclick="document.getElementById('vnos').value += '7'">7</button></td>
+			<td><button onclick="document.getElementById('vnos').value += '8'">8</button></td>
+			<td><button onclick="document.getElementById('vnos').value += '9'">9</button></td>
+			<td><button onclick="document.getElementById('vnos').value += '*'">*</button></td>
+		</tr>
+		<tr>
+			<td><button onclick="document.getElementById('vnos').value += '4'">4</button></td>
+			<td><button onclick="document.getElementById('vnos').value += '5'">5</button></td>
+			<td><button onclick="document.getElementById('vnos').value += '6'">6</button></td>
+			<td><button onclick="document.getElementById('vnos').value += '-'">-</button></td>
+		</tr>
+		<tr>
+			<td><button onclick="document.getElementById('vnos').value += '1'">1</button></td>
+			<td><button onclick="document.getElementById('vnos').value += '2'">2</button></td>
+			<td><button onclick="document.getElementById('vnos').value += '3'">3</button></td>
+			<td><button onclick="document.getElementById('vnos').value += '+'">+</button></td>
+		</tr>
+		<tr>
+			<td><button onclick="document.getElementById('vnos').value = document.getElementById('vnos').value * -1;">-/+</button></td>
+			<td><button onclick="document.getElementById('vnos').value += '0'">0</button></td>
+			<td><button onclick="document.getElementById('vnos').value += '.'">,</button></td>
+			<td><button	onclick="izracunaj()">=</button></td>
+		</tr>
+	</table>
+</body>
+<script>
+	var zgodovina = [];
+
+	function izbrisiTrenutniVnos() {
+		document.getElementById("vnos").value = "";
+	}
+
+	// razlika med izbrisiTrenutniVnos() in izbrisiVse() je to da izbrisiVse() tudi pobrise zgodovino, torej, to kaj je dosedaj že bilo izračunano.
+	function izbrisiVse(){
+		document.getElementById('vnos').value = '';
+		zgodovina = [];
+	}
+
+	function izracunaj(){
+		if(document.getElementById("vnos").value != eval(document.getElementById("vnos").value)){
+			document.getElementById('vnos').value = eval(document.getElementById('vnos').value);
+			zgodovina.push(document.getElementById("vnos").value);
+			console.log(zgodovina);
+		}
+		
+	}
+
+</script>
+
+</html>

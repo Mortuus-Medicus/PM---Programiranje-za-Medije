@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        td,
+        th {
+            border: 1px solid #000000;
+            padding: 3px;
+        }
+
+        .mocno {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>5. naloga - Množenje</h2>
+
+    <span id="izpis"> </span>
+</body>
+<script>
+    var vnos = prompt("Vnesi poljubno število:");
+    var zastava = true;
+    var izpis = "";
+
+    // Tukaj najprej preverim ali je vnos število, nato ali je vnos, prazen, ter nato ali je vnos dolgi 0, za več info, luka.sauperl@student.um.si
+    if (isNaN(vnos) || (vnos == "" || vnos.length == 0)) {
+        izpis += "Vneseno ni bilo nobeno število!"
+        zastava = false;
+    } else {
+        zastava = true;
+    }
+
+
+    if (zastava == true) {
+        // Tukaj se izvaja program
+        izpis += "<table>";
+        vnos *= 1;
+
+        for (i = vnos; i >= 0; i--) {
+            izpis += "<tr>";
+            for (j = vnos; j >= 0; j--) {
+                if (i == vnos && j == vnos) {
+                    izpis += "<td class='mocno'>a^b</td>";
+                } else if (i == vnos) {
+                    izpis += "<td class ='mocno'>" + (j + 1) + "</td>";
+
+                } else if (j == vnos) {
+                    izpis += "<td class ='mocno'>" + (i + 1) + "</td>";
+                } else {
+                    izpis += "<td>" + zracunajPotenco(i + 1, j + 1) + "</td>";
+                }
+            }
+
+            izpis += "</tr>";
+        }
+
+        izpis += "</table>";
+    }
+
+    // Torej, x^y
+    function zracunajPotenco(x, y) {
+        var rezultat = x;
+
+        for (z = 1; z < y; z++) {
+            rezultat *= x;
+        }
+
+        return rezultat;
+    }
+
+
+
+    document.getElementById("izpis").innerHTML = izpis;
+</script>
+
+</html>

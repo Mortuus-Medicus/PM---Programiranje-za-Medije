@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        td,
+        th {
+            border: 1px solid #000000;
+            padding: 3px;
+        }
+
+        .mocno {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>7. naloga - Sortiranje</h2>
+
+    <span id="izpis"> </span>
+</body>
+<script>
+    var izpis = "";
+    var poljeStevil = [];
+
+    for (i = 0; i < 50; i++) {
+        var temp = Math.floor((Math.random() * 151) - 50);
+        poljeStevil.push(temp);
+    }
+
+    izpisPolje(poljeStevil);
+
+    var sortiranaStevila = poljeStevil;
+
+    // Seveda se da tudi sortirati tako da uporabiš binary, quick, bubble etc... sort, toda
+    // ko sem začel delati to nalogo sem opazil da obstaja že vgrajen sort, kar je zelo cool
+    // tako da je bilo skoraj ne mogoče da ne bi uporabil vgrajenega :D
+
+    // Hahahaha! :D
+    sortiranaStevila.sort(sortirajStevila);
+
+    izpisPolje(sortiranaStevila);
+
+    var poljeSportov = ["Nogomet", "Tenis", "Kosarka", "Hokej", "Formula 1", "Moto GP"];
+    izpisPolje(poljeSportov);
+
+    // prav zanimivo, tudi za to sem najprej napisal funkcijo ki je z for zanko 
+    // obrnila polje, potem pa sem še malo brskal po dokumentaciji pa sem našel to zabavno
+    // metodo! Kar sama ti obrne array :D
+    var sortiraniSporti = poljeSportov.reverse();
+    izpisPolje(sortiraniSporti);
+
+    function izpisPolje(array) {
+        izpis += "<br><table><tr>";
+
+        array.forEach(function (vrednost, indeks) {
+            izpis += "<td>" + vrednost + "</td>";
+        });
+
+        izpis += "</tr></table><br>";
+    }
+
+    // ta funkcija je dodano zato, da povemu array.sort() 
+    // da naj stevila sortira po številih in ne po črkah
+    function sortirajStevila(a, b) {
+        return a - b;
+    }
+
+    document.getElementById("izpis").innerHTML = izpis;
+</script>
+
+</html>

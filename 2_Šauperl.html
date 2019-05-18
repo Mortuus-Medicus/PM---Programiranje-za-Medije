@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        table{
+            border-collapse: collapse;
+        }
+        td, th{
+            border: 1px solid #000000;
+            padding: 3px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>2. Naloga - Polja</h2>
+
+<span id="izpis"></span>
+
+</body>
+
+<script>
+        // spremenljivka za array oz. polje hrane
+        var mojaHrana = ["JaffaCakes", "Piščančji Zrezek", "Puranji Zrezek", "Kurji Zrezek", "Kravji Zrezek", "Svinski Zrezek"];
+
+        // spremenljivka v katero hranim vse izpise, ter jih na koncu izpišem na spletni strani, 
+        // za tak pristop sem se odločil, ker nimam rad document.getElement..., in s tem ga morem samo enkrat uporabiti.
+        var izpis = "";
+
+        // k izpisu dodamo celotni array v obliki tabele
+        izpisTabela(mojaHrana);
+
+        // funkcija s katero postavim array hrane v tabelo, tako da lepše izgleda na spletni strani
+        function izpisTabela(array){
+            izpis += "<br><table>";
+
+            array.forEach(function(vrednost, indeks){
+                izpis +="<tr><td>" + indeks + "</td><td>" + vrednost + "</td></tr>";
+            });
+
+            izpis += "</table><br>";
+        }
+        
+        // K izpisu dodamo zadnji element, ter ga izbrišemo
+        izpis += mojaHrana.pop() + "<br>";
+
+        // ponovno dodamo celotni array k izpisu
+        izpisTabela(mojaHrana);
+
+        // četrto mesto zamenjamo z "HAMBURGER", četrto mesto je na indeksu 3, zato ker indeksi se štejejo od 0 dalje
+        mojaHrana[3] = "HAMBURGER";
+
+        // k izpisu dodamo celotni array v obliki tabele
+        izpisTabela(mojaHrana);
+
+        // Z push dodamo na stack, torej dodamo na konec polja, arrayja
+        mojaHrana.push("Zajčji Zrezek");
+        mojaHrana.push("Ovčji Zrezek");
+
+        // k izpisu dodam ne urejen seznam z elementi iz polja
+        izpis += "<ul>";
+        mojaHrana.forEach(function(vrednost){
+            izpis += "<li>" + vrednost + "</li>";
+        });
+        izpis += "</ul>";
+
+        // ustvarimo novi array/polje, kjer so indeksi besede, sklepam da je to asociativno polje
+        var najboljseTri = {
+            "prvaHrana" : mojaHrana[0],
+            "drugaHrana" : mojaHrana[1],
+            "tretjaHrana" : mojaHrana[2]
+        };
+
+        // tukaj pa je malo drugače ker indeksi niso številke ampak so besede, tako da je treba preku objekta loopati
+        izpis += "<br><table>";
+        Object.keys(najboljseTri).forEach(function(vrednost, indeks){
+            izpis +="<tr><td>" + indeks + "</td><td>" + najboljseTri[vrednost] + "</td></tr>";
+        });
+        izpis += "</table><br>";
+
+        
+        // Izpis vsega
+        document.getElementById("izpis").innerHTML = izpis;
+    </script>
+</html> 
