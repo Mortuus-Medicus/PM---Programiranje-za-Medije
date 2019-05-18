@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<style>
+		table {
+			border-collapse: collapse;
+		}
+
+		td,
+		th {
+			border: 1px solid #000000;
+			padding: 3px;
+		}
+
+		.mocno {
+			font-weight: bold;
+		}
+	</style>
+</head>
+
+<body>
+	<h2>9. naloga - Opravilni seznam</h2>
+
+	<button onclick="odstraniOpravilo()">Opravilo urejeno</button>
+	<input id="vnos" type="text">
+	<button onclick="dodajOpravilo()">Dodaj novo opravilo</button>
+
+	<br><br>
+	<table id="tabela">
+		<thead>
+			<tr>
+				<th></th>
+				<th>Št. Vrstice</th>
+				<th>Opravilo</th>
+			</tr>
+		</thead>
+	</table>
+
+</body>
+<script>
+	var steviloVrstic = 0;
+	function dodajOpravilo() {
+		// pridobimo referenco na tabelo
+		var tabela = document.getElementById("tabela");
+
+		// ustvarimo novo vrsto; -1 doda vrstico na zadnje mesto!
+		var novaVrsta = tabela.insertRow(-1);
+		steviloVrstic++;
+
+		// ustvarimo prvo celico
+		var novaCelica = novaVrsta.insertCell(0);
+
+		// ustvarimo besedilo za celico
+		var novoBesedilo = document.createTextNode("");
+
+		// dodamo tekst node, ter potem vstavimo checkbox
+		novaCelica.appendChild(novoBesedilo);
+		novaCelica.innerHTML = "<input id='odstrani_" + steviloVrstic + "' type='checkbox'>";
+
+
+		// ustvarimo drugo celico
+		var novaCelica = novaVrsta.insertCell(1);
+
+		// ustvarimo besedilo za celico
+		var novoBesedilo = document.createTextNode("");
+
+		// dodamo tekst node, ter potem vstavimo checkbox
+		novaCelica.appendChild(novoBesedilo);
+		novaCelica.innerHTML = steviloVrstic;
+
+
+		// ustvarimo tretjo celico
+		var novaCelica = novaVrsta.insertCell(2);
+
+		// ustvarimo besedilo za celico
+		var novoBesedilo = document.createTextNode("");
+
+		// dodamo tekst node, ter potem vstavimo checkbox
+		novaCelica.appendChild(novoBesedilo);
+		novaCelica.innerHTML = document.getElementById("vnos").value;
+	}
+
+	function odstraniOpravilo() {
+		var tabela = document.getElementById("tabela");
+		var dolzina = tabela.rows.length;
+
+		// tukaj i začne z 1 tako da mi th ne bo preverjalo
+		for (var i = (dolzina-1); i > 0; i--) {
+			var celice = tabela.rows.item(i).cells;
+
+			if (document.getElementById("odstrani_" + celice.item(1).innerHTML).checked == true) {
+				tabela.deleteRow(i);
+			}
+		}
+	}
+
+</script>
+
+</html>
